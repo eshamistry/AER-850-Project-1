@@ -1,4 +1,63 @@
 # Step 1
 import pandas as pd
 
-data = pd.read_csv(Project 1 Data.csv)
+df = pd.read_csv("Project 1 Data.csv")
+
+
+# Step 2
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+
+groups = df.groupby('Step')
+    
+fig = plt.figure(num = 1, figsize = (18, 18))
+ax = fig.add_subplot(111, projection='3d')
+
+colors = {1: 'r', 2: 'g', 3: 'b', 4: 'yellow', 5: 'c', 6: 'm', 7: 'orange', 8: 'pink', 9: 'tan', 10: 'sienna', 11: 'purple', 12: 'springgreen', 13: 'skyblue'}
+
+for Step, group_data in groups:
+    ax.scatter(group_data['X'], group_data['Y'], group_data['Z'], c=colors[Step], label=Step, marker='o')
+
+ax.set_xlabel('X')
+ax.set_ylabel('Y')
+ax.set_zlabel('Z')
+ax.set_title('3D Scatter Plot Based on Groups')
+ax.legend()
+plt.show()
+
+stats = groups['X', 'Y', 'Z'].agg(['mean', 'std', 'count'])
+
+plt.figure(num = 2, figsize = (12, 6))
+for column in ['X', 'Y', 'Z']:
+    plt.scatter(stats.index, stats[column]['mean'], label=column)
+
+plt.xlabel('Step')
+plt.ylabel('Mean Value')
+plt.title('Mean Values of X, Y, and Z by Step')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+plt.figure(num = 3, figsize = (12, 6))
+for column in ['X', 'Y', 'Z']:
+    plt.scatter(stats.index, stats[column]['std'], label=column)
+
+plt.xlabel('Step')
+plt.ylabel('Standard Value')
+plt.title('Standard Values of X, Y, and Z by Step')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+
+plt.figure(num = 4, figsize = (12, 6))
+for column in ['X', 'Y', 'Z']:
+    plt.scatter(stats.index, stats[column]['count'], label=column)
+
+plt.xlabel('Step')
+plt.ylabel('Count Value')
+plt.title('Count Values of X, Y, and Z by Step')
+plt.legend()
+plt.grid(True)
+plt.show()
