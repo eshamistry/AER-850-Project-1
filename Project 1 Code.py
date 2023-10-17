@@ -98,12 +98,18 @@ plt.show()
 
 # Step 4
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
-X = df.drop(['Y', 'Z', 'Step'], axis =1)
-Y = df.drop(['X', 'Z', 'Step'], axis =1)
-Z = df.drop(['X', 'Y', 'Step'], axis =1)
+features = df[['X', 'Y', 'Z']]
 Step = df['Step']
 
-X_train, X_test, Y_train, Y_test, Z_train, Z_step, Step_train, Step_test = train_test_split(X, Y, Z, Step, test_size = 0.2, random_state = 42)
+features_train, features_test, Step_train, Step_test = train_test_split(features, Step, test_size = 0.2, random_state = 42)
 
+from sklearn.neighbors import KNeighborsClassifier
 
+knnmodel = KNeighborsClassifier(n_neighbors=3)
+knnmodel.fit(features_train, Step_train)
+
+knn_predict = knnmodel.predict(features_test)
+knn_accuracy = accuracy_score(Step_train, knn_predict)
+print(f"Accuracy: {knn_accuracy}")
