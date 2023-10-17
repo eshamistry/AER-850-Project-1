@@ -96,3 +96,14 @@ plt.tight_layout()  # Adjust subplot layout
 plt.show()
 
 
+# Step 4
+from sklearn.model_selection import train_test_split
+
+X = df.drop(['Y', 'Z', 'Step'], axis =1)
+Y = df.drop(['X', 'Z', 'Step'], axis =1)
+Z = df.drop(['X', 'Y', 'Step'], axis =1)
+Step = df['Step']
+
+X_train, X_test, Y_train, Y_test, Z_train, Z_step, Step_train, Step_test = train_test_split(X, Y, Z, Step, test_size = 0.2, random_state = 42)
+
+
